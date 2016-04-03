@@ -8,14 +8,19 @@ var ReactDOM = require('react-dom/server');
 var Router = require('react-router');
 var routes = require('./app/routes');
 
+// Middlewares
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
+// Database
 var config = require('./config.js');
 var mongoose = require('mongoose');
 var Bookmark = require('./models/Bookmark.js');
+
+// routes
+var bookmarkRouter = require('./routes/bookmarkRouter.js')();
 
 var app = express();
 
@@ -26,6 +31,11 @@ app.use(bodyParser.urlencoded({
   extended: false
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/api', bookmarkRouter);
+// app.get('/api/book', function(req, res) {
+//   var jsonRes = {"name": "vikram"};
+//   res.json(jsonRes);
+// });
 
 mongoose.connect(config.database);
 mongoose.connection.on('error', function() {
