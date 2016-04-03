@@ -17,7 +17,6 @@ var bodyParser = require('body-parser');
 // Database
 var config = require('./config.js');
 var mongoose = require('mongoose');
-var Bookmark = require('./models/Bookmark.js');
 
 // routes
 var bookmarkRouter = require('./routes/bookmarkRouter.js')();
