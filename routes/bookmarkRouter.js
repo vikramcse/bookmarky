@@ -22,7 +22,7 @@ var routes = function() {
     })
     .post(function(req, res) {
       var bookmark = new Bookmark(req.body);
-      
+
       bookmark.save(function(err) {
         if (!err) {
           console.log('bookmark saved');
@@ -32,6 +32,20 @@ var routes = function() {
       res.status(201).send(bookmark);
     });
 
+    // to get particular item in bookmarks
+    bookmarkRouter
+      .route('/bookmarks/:id')
+      .get(function(req, res) {
+        var id = req.params.id;
+        
+        Bookmark.findById(id, function(err, bookmark) {
+          if (err) {
+            res.status(500).send(err);
+          } else {
+            res.json(bookmark);
+          }
+        });
+      });
   return bookmarkRouter;
 };
 
