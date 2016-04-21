@@ -46,6 +46,27 @@ var routes = function() {
           }
         });
       })
+      .put(function(req, res) {
+        Bookmark.findById({
+          _id: req.params.id
+        }, function(err, bookmark) {
+          if (err) {
+            res.status(500).send(err);
+          } else {
+            if ('url' in req.body) {
+              bookmark.url = req.body.url;
+
+              bookmark.save(function(err) {
+                if (err) {
+                  res.status(500).send(err);
+                } else {
+                  res.json({ message: 'Bookmark updated!' });
+                }
+              });
+            }
+          }
+        });
+      })
       .delete(function(req, res) {
         Bookmark.remove({
           _id: req.params.id
