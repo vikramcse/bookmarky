@@ -36,15 +36,27 @@ var routes = function() {
     bookmarkRouter
       .route('/bookmarks/:id')
       .get(function(req, res) {
-        var id = req.params.id;
-        
-        Bookmark.findById(id, function(err, bookmark) {
+        Bookmark.findById({
+          _id: req.params.id
+        }, function(err, bookmark) {
           if (err) {
             res.status(500).send(err);
           } else {
             res.json(bookmark);
           }
         });
+      })
+      .delete(function(req, res) {
+        Bookmark.remove({
+          _id: req.params.id
+        }, function(err, bookmark) {
+          if (err) {
+            res.status(500).send(err);
+          } else {
+            res.json({ message: 'Successfully deleted' });
+          }
+        })
+
       });
   return bookmarkRouter;
 };
