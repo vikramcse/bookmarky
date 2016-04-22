@@ -20,12 +20,13 @@ var routes = function() {
         }
       });
     })
+
     .post(function(req, res) {
       var bookmark = new Bookmark(req.body);
 
       bookmark.save(function(err) {
-        if (!err) {
-          console.log('bookmark saved');
+        if (err) {
+          res.status(500).send(err);
         }
       });
 
@@ -59,10 +60,10 @@ var routes = function() {
               bookmark.save(function(err) {
                 if (err) {
                   res.status(500).send(err);
-                } else {
-                  res.json({ message: 'Bookmark updated!' });
                 }
               });
+
+              res.status(201).send(bookmark);
             }
           }
         });
