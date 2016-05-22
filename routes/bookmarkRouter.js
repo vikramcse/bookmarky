@@ -27,6 +27,7 @@ var routes = function() {
       bookmark.save(function(err) {
         if (err) {
           res.status(500).send(err);
+          return;
         }
       });
 
@@ -48,9 +49,7 @@ var routes = function() {
         });
       })
       .put(function(req, res) {
-        Bookmark.findById({
-          _id: req.params.id
-        }, function(err, bookmark) {
+        Bookmark.findById({_id: req.params.id}, function(err, bookmark) {
           if (err) {
             res.status(500).send(err);
           } else {
@@ -60,6 +59,7 @@ var routes = function() {
               bookmark.save(function(err) {
                 if (err) {
                   res.status(500).send(err);
+                  return;
                 }
               });
 
@@ -69,9 +69,7 @@ var routes = function() {
         });
       })
       .delete(function(req, res) {
-        Bookmark.remove({
-          _id: req.params.id
-        }, function(err, bookmark) {
+        Bookmark.remove({_id: req.params.id}, function(err, bookmark) {
           if (err) {
             res.status(500).send(err);
           } else {
@@ -80,6 +78,7 @@ var routes = function() {
         })
 
       });
+
   return bookmarkRouter;
 };
 
